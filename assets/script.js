@@ -1,132 +1,172 @@
 //Variables created for quiz, results, and 'submit' button
 var quizBox = document.getElementById("quiz");
 var resultsBox = document.getElementById("results");
-var submitButton = document.getElementById("submit");
+var startButton = document.getElementById("start");
+var count;
+var correctAnswer;
+var questionIndex;
+
+document.getElementById("start").addEventListener("click", startGame);
 
 //Displays quiz questions and answers
-function makeQuiz(questions, quizBox, resultsBox, submitButton){
-    var output = [];
-    quizQuestions.forEach(
-        (currentQuestion, questionNumber) {
-            var answers = [];
-            for(letter in currentQuestion.answers){
-                answers.push(
-                    `<label>
-                    <input type="radio" name="question${questionNumber}" value="${letter}">
-                    ${letter} :
-                    ${currentQuestion.answers[letter]}
-                  </label>`
-                );
-            }
-            output.push(
-                `<div class="question"> ${currentQuestion.question} </div>
-                <div class="answers"> ${answers.join('')} </div>`
-              );
-            }
-          );
-        }
-    )
+function makeQuiz() {
+    quizBox.style.display = "block";
+    var currentQuestion = quizQuestions[questionIndex];
+    correctAnswer = currentQuestion.correctAnswer;
+    displayCurrentQuestion();
 }
 
-function quizResults(){}
+function displayCurrentQuestion() {
+    var currentQuestion = quizQuestions[questionIndex];
+    var questionEl = document.createElement("div");
+    questionEl.textContent = currentQuestion.question;
+    quizBox.appendChild(questionEl);
+    var answerKeys = Object.keys(currentQuestion["answers"]);
 
-function generateQuizd
+    for (let index=0; index < answerKeys.length; index++) {        
+        var currentKey = answerKeys[index];
+        var buttonText = currentQuestion["answers"][currentKey];
+        var answer = document.createElement("button");
+        answer.innerHTML = buttonText;
+        quizBox.appendChild(answer);
+    }
 
-makeQuiz();
+    // document.getElementById("results").appendChild(resultsBox);
+}
 
-submitButton.addEventListener("click", quizResults);
+function showResults() {
+    var answerContainer = quizBox.querySelectorAll('.answers');
+    //Tracks user's answers
+    let numCorrect = 0; 
+    quizQuestions.forEach( (currentQuestion, questionIndex) => {
+        var answerContainer = answerContainer[currentQuestion];
+        var userAnswer = (answerContainer.querySelector(selector)) || {}.value;
+
+        if(userAnswer === currentQuestion.correctAnswer) {
+            numCorrect++;
+            answerContainer[questionIndex].style.color = '#A7E99C';
+        }
+        else{
+            answerContainer[questionIndex].style.color = '#880808';
+        }
+    });
+    resultsBox.innerHTML = '${numCorrect} out of ${questions.length}';
+}
+
+function startGame() {
+    count = 75;
+    questionIndex = 0;
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("timer").innerHTML = count;
+    makeQuiz();
+    var quizTimer = setInterval(() => {
+        count--; 
+        document.getElementById("timer").innerHTML = count;
+        if(count <= 0) {
+           clearInterval(quizTimer);
+           endGame(); 
+        }
+    }, 1000);
+}
+//Hides timer when game ends, displays results
+function endGame() {
+    document.getElementById("results").style.display = "block";
+    document.getElementById("timer").style.display = "none";
+}
+//TODO create a for loop for each question/answer 
+
 //Quiz questions and answers
 var quizQuestions = [
     {
-        question: "Who was the Greek goddess of love?",
+        question: "JavaScript is a ___-side programming language.",
         answers: {
-            a: "Athena",
-            b: "Calypso",
-            c: "Aphrodite"
+            a: "client",
+            b: "server",
+            c: "both"
         },
         correctAnswer: "c"
     },
     {
-        question: "What is 'pie' in Italian?",
+        question: "How do you find the minimum of x and y using JavaScript?",
         answers: {
-            a: "Cake",
-            b: "Pizza",
-            c: "Piazzo"
+            a: "min(x,y)",
+            b: "Math.min(x,y)",
+            c: "Math.min(xy)"
         },
         correctAnswer: "b"
     },
     {
-        question: "Who sang a song about being an eggman and a walrus?",
+        question: "Which JavaScript label catches all the values, except for the ones specified?",
         answers: {
-            a: "The Beatles",
-            b: "Elvis Presley",
-            c: "Whitney Houston"
+            a: "default",
+            b: "catch",
+            c: "label"
         },
         correctAnswer:"a"
     },
     {
-        question: "How many total sides would 3 triangles and 3 rectangles have?",
+        question: "Which is a correct 'if' statement to execute certain code if 'x' is equal to 2?",
         answers: {
-            a: "21",
-            b: "14",
-            c: "38"
+            a: "if(x==2)",
+            b: "if(x=2)",
+            c: "none of the above"
         },
         correctAnswer: "a"
     },
     {
-        question: "Which ocean surrounds the Madlives?",
+        question: "What will the code 'Boolean(3>7)' return?",
         answers: {
-            a: "Pacific",
-            b: "Indian",
-            c: "Atlantic"
+            a: "false",
+            b: "true",
+            c: "SyntaxError"
         },
         correctAnswer: "b"
     },
     {
-        question: "Which of the following is a gas planet?",
+        question: "What are variables used for in JavaScript programs?",
         answers: {
-            a: "Earth",
-            b: "Mars",
-            c: "Jupiter"
+            a: "inducing high-school algebra flashbacks",
+            b: "varying randomly",
+            c: "storing numbers, dates, or other values"
         },
         correctAnswer: "c"
     },
     {
-        question: "Which famous Chinese writer is known for preaching morals?",
+        question: "Which of the following are capabilities of functions in JavaScript?",
         answers: {
-            a: "Confucius",
-            b: "Tao",
-            c: "Mao Ze Dong"
+            a: "accept parameters",
+            b: "return a value",
+            c: "accept parameters and return a value"
         },
         correctAnswer: "a"
     },
     {
-        question: "How many pedals do modern pianos have?",
+        question: "Which attribute can hold the JavaScript version?",
         answers: {
-            a: "2",
-            b: "3",
-            c: "4"
+            a: "SCRIPT",
+            b: "LANGUAGE",
+            c: "VERSION"
         },
         correctAnswer: "b"
     },
     {
-        question: "What is the capital city of Spain?",
+        question: "Which of the following is NOT considered a JavaScript operator?",
         answers: {
-            a: "Madrid",
-            b: "Barcelona",
-            c: "Valencia"
+            a: "this",
+            b: "new",
+            c: "typeof"
         },
         correctAnswer: "a"
     },
     {
-        question: "Which Chess piece can only move diagonally?",
+        question: "Using a/an ___ statement is how you test for a specific condition.",
         answers: {
-            a: "The queen",
-            b: "A rook",
-            c: "A bishop"
+            a: "For-",
+            b: "Switch-",
+            c: "If-"
         },
         correctAnswer: "c"
-    },
+    }
 ]
 
 console.log("oh hey there");

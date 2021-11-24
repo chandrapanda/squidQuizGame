@@ -8,9 +8,22 @@
     <title>Chandra's Quiz Game</title>
 </head>
 <body>
-    <div id="quiz"></div>
-<button id="submit">Submit Quiz</button>
-<div id="results"></div>
-<script src="assets/script.js"></script>
+    <div id="timer"></div>
+    <div id="welcome">
+        <h1>Welcome to the ULTIMATE Javascript quiz game!</h1>
+        <p>Try to answer the questions before the timer hits 0 and then log your score!</p>
+        <button id="start">Start Quiz</button>
+    </div>
+    
+    <div id="quiz">
+        <div id="question"></div>
+    </div>
+
+    <div id="results">
+    <h1>The game has ended!</h1>
+    <div id="correct-answers"></div>
+<!--TODO user should be able to input initials-->
+    </div>
+    <script src="assets/script.js"></script>
 </body>
 </html>

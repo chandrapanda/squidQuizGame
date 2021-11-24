@@ -5,6 +5,7 @@ var startButton = document.getElementById("start");
 var count;
 var correctAnswer;
 var questionIndex;
+var numCorrect;
 
 document.getElementById("start").addEventListener("click", startGame);
 
@@ -17,27 +18,49 @@ function makeQuiz() {
 }
 
 function displayCurrentQuestion() {
+    quizBox.innerHTML = "";
     var currentQuestion = quizQuestions[questionIndex];
+    correctAnswer = currentQuestion["correctAnswer"];
     var questionEl = document.createElement("div");
     questionEl.textContent = currentQuestion.question;
     quizBox.appendChild(questionEl);
     var answerKeys = Object.keys(currentQuestion["answers"]);
 
+
     for (let index=0; index < answerKeys.length; index++) {        
         var currentKey = answerKeys[index];
         var buttonText = currentQuestion["answers"][currentKey];
         var answer = document.createElement("button");
+        answer.value = currentKey;
         answer.innerHTML = buttonText;
         quizBox.appendChild(answer);
+        answer.addEventListener("click", chooseAnswer);
+    }
+    // document.getElementById("results").appendChild(resultsBox);
+}
+
+function chooseAnswer(event) {
+    console.log(event.target.value);
+    console.log(correctAnswer);
+    var userAnswer = event.target.value;
+    currentQuestion = quizQuestions[questionIndex]
+    correctAnswer = currentQuestion["correctAnswer"];
+    if(userAnswer === correctAnswer) {
+        numCorrect++;
+        questionIndex++;
+        displayCurrentQuestion(); 
+    }
+    else{
+        count = count - 5;
+        document.getElementById("timer").innerHTML = count;
     }
 
-    // document.getElementById("results").appendChild(resultsBox);
 }
 
 function showResults() {
     var answerContainer = quizBox.querySelectorAll('.answers');
     //Tracks user's answers
-    let numCorrect = 0; 
+
     quizQuestions.forEach( (currentQuestion, questionIndex) => {
         var answerContainer = answerContainer[currentQuestion];
         var userAnswer = (answerContainer.querySelector(selector)) || {}.value;
@@ -55,6 +78,7 @@ function showResults() {
 
 function startGame() {
     count = 75;
+    numCorrect = 0; 
     questionIndex = 0;
     document.getElementById("welcome").style.display = "none";
     document.getElementById("timer").innerHTML = count;
@@ -72,7 +96,13 @@ function startGame() {
 function endGame() {
     document.getElementById("results").style.display = "block";
     document.getElementById("timer").style.display = "none";
+    quizBox.innerHTML = "";
+    //Create a result box
+    resultsBox.innerHTML = "";
 }
+
+//TODO Create an ENDGAME when all questions are answered
+
 //TODO create a for loop for each question/answer 
 
 //Quiz questions and answers
@@ -120,7 +150,7 @@ var quizQuestions = [
             b: "true",
             c: "SyntaxError"
         },
-        correctAnswer: "b"
+        correctAnswer: "a"
     },
     {
         question: "What are variables used for in JavaScript programs?",

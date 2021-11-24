@@ -5,9 +5,13 @@ var startButton = document.getElementById("start");
 var count;
 var correctAnswer;
 var questionIndex;
-var numCorrect;
+var quizTimer;
 
+//Starts game when 'Start' button is clicked
 document.getElementById("start").addEventListener("click", startGame);
+
+//Logs score when 'Submit' button is clicked
+document.getElementById("submit").addEventListener("click", logScore);
 
 //Displays quiz questions and answers
 function makeQuiz() {
@@ -36,7 +40,7 @@ function displayCurrentQuestion() {
         quizBox.appendChild(answer);
         answer.addEventListener("click", chooseAnswer);
     }
-    // document.getElementById("results").appendChild(resultsBox);
+    
 }
 
 function chooseAnswer(event) {
@@ -46,44 +50,30 @@ function chooseAnswer(event) {
     currentQuestion = quizQuestions[questionIndex]
     correctAnswer = currentQuestion["correctAnswer"];
     if(userAnswer === correctAnswer) {
-        numCorrect++;
-        questionIndex++;
-        displayCurrentQuestion(); 
-    }
-    else{
+
+        ////When user answers final question correctly, the game ends
+        if(questionIndex === quizQuestions.length - 1) {
+            endGame();
+
+        } else {
+            questionIndex++;
+            displayCurrentQuestion(); 
+        }
+
+    } else {
         count = count - 5;
         document.getElementById("timer").innerHTML = count;
     }
 
 }
 
-function showResults() {
-    var answerContainer = quizBox.querySelectorAll('.answers');
-    //Tracks user's answers
-
-    quizQuestions.forEach( (currentQuestion, questionIndex) => {
-        var answerContainer = answerContainer[currentQuestion];
-        var userAnswer = (answerContainer.querySelector(selector)) || {}.value;
-
-        if(userAnswer === currentQuestion.correctAnswer) {
-            numCorrect++;
-            answerContainer[questionIndex].style.color = '#A7E99C';
-        }
-        else{
-            answerContainer[questionIndex].style.color = '#880808';
-        }
-    });
-    resultsBox.innerHTML = '${numCorrect} out of ${questions.length}';
-}
-
 function startGame() {
     count = 75;
-    numCorrect = 0; 
     questionIndex = 0;
     document.getElementById("welcome").style.display = "none";
     document.getElementById("timer").innerHTML = count;
     makeQuiz();
-    var quizTimer = setInterval(() => {
+    quizTimer = setInterval(() => {
         count--; 
         document.getElementById("timer").innerHTML = count;
         if(count <= 0) {
@@ -95,15 +85,19 @@ function startGame() {
 //Hides timer when game ends, displays results
 function endGame() {
     document.getElementById("results").style.display = "block";
-    document.getElementById("timer").style.display = "none";
     quizBox.innerHTML = "";
     //Create a result box
-    resultsBox.innerHTML = "";
+    clearInterval(quizTimer);
 }
 
-//TODO Create an ENDGAME when all questions are answered
-
-//TODO create a for loop for each question/answer 
+//Allows user to log initials and score, prints to page
+function logScore() {
+    var score = quizTimer.value;
+    console.log(score);
+    var initials = document.querySelector("initials");
+    document.getElementById("initials").innerHTML = score;
+    localStorage.getItem(initials, score);
+}
 
 //Quiz questions and answers
 var quizQuestions = [

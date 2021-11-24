@@ -14,15 +14,18 @@
         <p>Try to answer the questions before the timer hits 0 and then log your score!</p>
         <button id="start">Start Quiz</button>
     </div>
-    
-    <div id="quiz">
-        <div id="question"></div>
-    </div>
-
+    <div id="quiz"></div>
+        <!-- When game has ended, a message appears  -->
     <div id="results">
-    <h1>The game has ended!</h1>
-    <div id="correct-answers"></div>
-<!--TODO user should be able to input initials-->
+        <h1>The game has ended!</h1>
+        <h2>HIGH SCORES</h2>
+          <!--User can input initials-->
+        <p>Enter your initials to log your score.</p>
+        <div id="high-scores"></div>
+        <label for="initials">
+            <input type="text" id="initials" />
+            <input type="submit" id="submit"/>
+        </label>
     </div>
     <script src="assets/script.js"></script>
 </body>

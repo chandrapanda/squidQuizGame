@@ -6,12 +6,13 @@ var count;
 var correctAnswer;
 var questionIndex;
 var quizTimer;
+var highScores = JSON.parse(localStorage.getItem("highScores"));
 
 //Starts game when 'Start' button is clicked
 document.getElementById("start").addEventListener("click", startGame);
 
 //Logs score when 'Submit' button is clicked
-document.getElementById("submit").addEventListener("click", logScore);
+document.getElementById("submit-initials").addEventListener("click", logScore);
 
 //Displays quiz questions and answers
 function makeQuiz() {
@@ -92,11 +93,33 @@ function endGame() {
 
 //Allows user to log initials and score, prints to page
 function logScore() {
-    var score = quizTimer.value;
-    console.log(score);
-    var initials = document.querySelector("initials");
-    document.getElementById("initials").innerHTML = score;
-    localStorage.getItem(initials, score);
+    document.getElementById("timer").style.display = "none";
+    //User high score and initials are stored and available on page load
+    var highScore = {
+        score: count,
+        initials: document.getElementById("initials").value
+    }
+    if (!highScores) {
+        highScores = [];
+    }
+
+    highScores.push(highScore);
+
+    //User high score and initials are displayed on page after 'SUBMIT' is clicked inside the "score-list" ol
+
+    //Make a list item per user submission and display on page
+
+    for (let index=0; index < highScores.length; index++) {
+        var currentHighScore = highScores[index];
+        var userScore = document.createElement("li");
+        userScore.innerHTML = currentHighScore.initials + " : " + currentHighScore.score;
+        document.getElementById("score-list").appendChild(userScore);
+ 
+    }
+
+    //TODO: Make retake quiz button
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
 //Quiz questions and answers

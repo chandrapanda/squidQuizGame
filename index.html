@@ -5,33 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap');
+        </style>
     <title>Chandra's Quiz Game</title>
 </head>
 <body>
-    <div id="timer">
-        <div id="countdown-number"></div>
-        <svg>
-            <circle r="18" cx="20" cy="20"></circle>
-        </svg>
-    </div>
+    <div id="timer"></div>
     <div id="welcome">
-        <h1>Welcome to the ULTIMATE Javascript quiz game!</h1>
-        <p>Try to answer the questions before the timer hits 0 and then log your score!</p>
+        <h1>Welcome to the ULTIMATE <br/>Javascript quiz game! 🤯</h1>
+        <p>Try to answer all of the questions before the timer hits 0 and then log your score!</p>
         <button id="start">Start Quiz</button>
     </div>
     <div id="quiz"></div>
         <!-- When game has ended, a message appears  -->
     <div id="results">
         <h1>The game has ended!</h1>
-        <h2>HIGH SCORES</h2>
           <!--User can input initials-->
-        <p>Enter your initials to log your score.</p>
-        <label for="initials">
+        <p>Enter your initials to log your score. ✍🏼</p>
+        <form id ="initial-form">
             <input type="text" id="initials" />
-            <input type="submit" id="submit-initials"/>
-        </label>
+            <input class="options-button" type ="submit" />
+        </form>
+        <button id="retake-quiz">Retake Quiz</button>
         <div id="high-scores">
-            <ol id="score-list"></ol>
+            <h2>Previous Scores<br/></h2>
+                <ul id="score-list"></ul>
         </div>
     </div>
     <script src="assets/script.js"></script>

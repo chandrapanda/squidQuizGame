@@ -12,9 +12,12 @@ var highScores = JSON.parse(localStorage.getItem("highScores"));
 document.getElementById("start").addEventListener("click", startGame);
 
 //Logs score when 'Submit' button is clicked
-document.getElementById("submit-initials").addEventListener("click", logScore);
+document.getElementById("initial-form").addEventListener("submit", logScore);
 
-//Displays quiz questions and answers
+//Restarts game when user clicks 'retake quiz'
+document.getElementById("retake-quiz").addEventListener("click", reloadPage);
+
+//Quiz appears on screen
 function makeQuiz() {
     quizBox.style.display = "block";
     var currentQuestion = quizQuestions[questionIndex];
@@ -22,31 +25,32 @@ function makeQuiz() {
     displayCurrentQuestion();
 }
 
+//Displays current question and answer options
 function displayCurrentQuestion() {
     quizBox.innerHTML = "";
     var currentQuestion = quizQuestions[questionIndex];
+    //Finds correct answer for question
     correctAnswer = currentQuestion["correctAnswer"];
     var questionEl = document.createElement("div");
     questionEl.textContent = currentQuestion.question;
     quizBox.appendChild(questionEl);
     var answerKeys = Object.keys(currentQuestion["answers"]);
 
-
+    //Generates question/answer button 
     for (let index=0; index < answerKeys.length; index++) {        
         var currentKey = answerKeys[index];
         var buttonText = currentQuestion["answers"][currentKey];
         var answer = document.createElement("button");
+        answer.classList.add("options-button");
         answer.value = currentKey;
         answer.innerHTML = buttonText;
         quizBox.appendChild(answer);
         answer.addEventListener("click", chooseAnswer);
     }
-    
 }
 
+//When user chooses the correct answer, the next question populates the screen
 function chooseAnswer(event) {
-    console.log(event.target.value);
-    console.log(correctAnswer);
     var userAnswer = event.target.value;
     currentQuestion = quizQuestions[questionIndex]
     correctAnswer = currentQuestion["correctAnswer"];
@@ -60,20 +64,22 @@ function chooseAnswer(event) {
             questionIndex++;
             displayCurrentQuestion(); 
         }
-
+        //if the user answers incorrectly, five seconds are deducted from the timer and score
     } else {
         count = count - 5;
         document.getElementById("timer").innerHTML = count;
     }
 
 }
-
+//The game starts by hiding the 'welcome' page and displaying the timer 
 function startGame() {
     count = 75;
     questionIndex = 0;
     document.getElementById("welcome").style.display = "none";
+    document.getElementById("timer").style.display = "block";
     document.getElementById("timer").innerHTML = count;
     makeQuiz();
+    //Timer begins counting down from 75 to 0
     quizTimer = setInterval(() => {
         count--; 
         document.getElementById("timer").innerHTML = count;
@@ -85,15 +91,19 @@ function startGame() {
 }
 //Hides timer when game ends, displays results
 function endGame() {
+    document.getElementById("quiz").style.display = "none";
     document.getElementById("results").style.display = "block";
     quizBox.innerHTML = "";
-    //Create a result box
     clearInterval(quizTimer);
-    document.getElementById("quiz").style.display = "hide";
 }
 
 //Allows user to log initials and score, prints to page
-function logScore() {
+function logScore(event) {
+    event.preventDefault();
+    if (document.getElementById("initials").value.length >= 4) {
+        alert("Please write three or fewer characters.")
+        return;
+    }
     document.getElementById("timer").style.display = "none";
     //User high score and initials are stored and available on page load
     var highScore = {
@@ -103,6 +113,12 @@ function logScore() {
     if (!highScores) {
         highScores = [];
     }
+    //hides form after score is logged to console to prevent multiple entries
+    document.getElementById("initial-form").style.display = "none";
+    //shows high scores from all previous games saved
+    document.getElementById("high-scores").style.display = "block";
+    //displays button to retake quiz
+    document.getElementById("retake-quiz").style.display = "inline-block";
 
     highScores.push(highScore);
 
@@ -118,9 +134,10 @@ function logScore() {
  
     }
 
-    //TODO: Make retake quiz button
-
     localStorage.setItem("highScores", JSON.stringify(highScores));
+}
+function reloadPage() {
+    reload = location.reload();
 }
 
 //Quiz questions and answers
@@ -130,7 +147,7 @@ var quizQuestions = [
         answers: {
             a: "client",
             b: "server",
-            c: "both"
+            c: "client and server"
         },
         correctAnswer: "c"
     },
@@ -157,7 +174,8 @@ var quizQuestions = [
         answers: {
             a: "if(x==2)",
             b: "if(x=2)",
-            c: "none of the above"
+            c: "none of the above",
+            d: "all of the above"
         },
         correctAnswer: "a"
     },
@@ -165,8 +183,7 @@ var quizQuestions = [
         question: "What will the code 'Boolean(3>7)' return?",
         answers: {
             a: "false",
-            b: "true",
-            c: "SyntaxError"
+            b: "true", 
         },
         correctAnswer: "a"
     },
@@ -180,11 +197,13 @@ var quizQuestions = [
         correctAnswer: "c"
     },
     {
-        question: "Which of the following are capabilities of functions in JavaScript?",
+        question: "JavaScript has the file extension:___.",
         answers: {
-            a: "accept parameters",
-            b: "return a value",
-            c: "accept parameters and return a value"
+            a: ".js",
+            b: ".Java",
+            c: ".javascript",
+            d: ".javajava",
+            e: ".html"
         },
         correctAnswer: "a"
     },
@@ -193,7 +212,7 @@ var quizQuestions = [
         answers: {
             a: "SCRIPT",
             b: "LANGUAGE",
-            c: "VERSION"
+            c: "VERSION",
         },
         correctAnswer: "b"
     },
@@ -202,7 +221,8 @@ var quizQuestions = [
         answers: {
             a: "this",
             b: "new",
-            c: "typeof"
+            c: "typeof",
+            d: "delete"
         },
         correctAnswer: "a"
     },
@@ -211,10 +231,12 @@ var quizQuestions = [
         answers: {
             a: "For-",
             b: "Switch-",
-            c: "If-"
+            c: "If-",
+            d: "When-",
+            e: "Super Awesome-"
         },
         correctAnswer: "c"
     }
 ]
 
-console.log("oh hey there");
+console.log("oh hey there :)");

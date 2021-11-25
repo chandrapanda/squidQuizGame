@@ -1,24 +1,28 @@
 body{
-	height: 100%;
-	width: 100%;
-	font-family: sans-serif;
-	color:black;
+	font-family: 'Bitter', sans-serif;
+	font-weight: 400;
 	text-align: center;
-	background-color: azure;
-	display: inline-block;
+	background-color: #add8e6;
 }
 
-h1 {
+h1, h2 {
 	font-size: 40px;
-	text-shadow: 2px 2px lightgray;
+	text-shadow: 2px 2px rgb(217, 234, 239);
 }
 
 p {
 	font-size: 30px;
 }
 
-#timer{
-	font-size: 25px;
+#initials {
+	height: 54px;
+	font-size: 23px;
+}
+
+#timer {
+	display: none;
+	font-size: 40px;
+	padding-bottom: 1em;
 	position: relative;
 	margin: auto;
 	margin-top: 100px;
@@ -27,79 +31,42 @@ p {
 	text-align: center;
 }
 
-#countdown-number{
-	color:white;
-	display:inline-block;
-	line-height: 40px;
-}
-
-svg {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 40px;
-	height: 40px;
-	transform: rotateY(-180deg) rotateZ(-90deg);
-}
-
-svg circle {
-	stroke-dasharray: 113px;
-	stroke-dashoffset: 0px;
-	stroke-linecap: round;
-	stroke-width: 2px;
-	stroke: white;
-	fill: none;
-	animation: countdown 10s linear infinite forwards;
-}
-
-@keyframes countdown {
-  from {
-    stroke-dashoffset: 0px;
-  }
-  to {
-    stroke-dashoffset: 113px;
-  }
-}
-
-.question{
-	font-weight: 600;
-}
-
 #quiz {
-	margin-left: 35%;
 	text-align: center;
-	width: 400px;
-	height: 250px;
 	display: none;
 	font-size: 30px;
-	border: #279;
-	border-style: groove;
-	
 }
 
-#score-list {
+#retake-quiz {
+	display: none;
+}
+
+#high-scores {
+	display: none;
 	text-align: center;
 	font-size: 30px;
+	list-style-position: inside;
+	margin: 0;
+	padding: 0;
 }
 
-#start {
+#start, .options-button, #retake-quiz {
     font-family: sans-serif;
 	font-size: 20px;
 	background-color: #279;
 	color: #fff;
-	border: 0px;
+	border: 1px;
 	border-radius: 3px;
 	padding: 20px;
 	cursor: pointer;
-	margin-bottom: 20px;
+	margin: 10px;
 }
 
-#start:hover{
+#start:hover, .options-button:hover, #retake-quiz:hover{
 	background-color: #38a;
 }
 
 #results {
 	display: none;
+	text-align: center;
 }
-/* TODO Create a media screen setting for smaller devices */
-@media (min-width: 600px)

@@ -89,6 +89,7 @@ function endGame() {
     quizBox.innerHTML = "";
     //Create a result box
     clearInterval(quizTimer);
+    document.getElementById("quiz").style.display = "hide";
 }
 
 //Allows user to log initials and score, prints to page

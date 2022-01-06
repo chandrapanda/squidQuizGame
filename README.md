@@ -17,7 +17,7 @@ After user completes the game, they may choose to retake the quiz at the simple 
 
 Native JavaScript, HTML, CSS
 
-## Screen shots
+# Screen shots
 
 [Screen shots showcasing the functionality of the site.](https://github.com/chandrapanda/squidQuizGame/issues/1#issue-1063231610)
 

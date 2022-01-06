@@ -13,7 +13,7 @@ User can view their previous high scores along with high scores of previous user
 
 After user completes the game, they may choose to retake the quiz at the simple press of a button.
 
-##Technologies Used
+# Technologies Used
 
 Native JavaScript, HTML, CSS
 
@@ -55,9 +55,9 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
-##License
+# License
 This software is available under teh following licenses:
 * MIT 
 
-##Contact
+# Contact
 https://github.com/chandrapanda/

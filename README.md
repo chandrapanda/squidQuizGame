@@ -1,6 +1,8 @@
 # squidQuizGame
 Challenge yourself with this quiz game!
 
+[Deployed Application](https://chandrapanda.github.io/squidQuizGame/)
+
 Users may choose from three answers on 10 JavaScript-related trivia questions. 
 
 A timer runs in the background to log time during the game.
@@ -10,6 +12,10 @@ Results from quiz are shown so user knows their score and can log their score wi
 User can view their previous high scores along with high scores of previous users. 
 
 After user completes the game, they may choose to retake the quiz at the simple press of a button.
+
+##Technologies Used
+
+Native JavaScript, HTML, CSS
 
 ## Screen shots
 
@@ -24,7 +30,6 @@ After user completes the game, they may choose to retake the quiz at the simple 
 ![User can retake the quiz](./assets/screenshots/retake_button.png)
 
 ![User can view scores](./assets/screenshots/shows_scores.png)
-
 
 
 ## User Story
@@ -50,3 +55,9 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
+##License
+This software is available under teh following licenses:
+* MIT 
+
+##Contact
+https://github.com/chandrapanda/
